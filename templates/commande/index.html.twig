@@ -1,0 +1,160 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des Commandes{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #2196F3;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        table th, table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        table th {
+            background-color: #2196F3;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .btn-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #2196F3;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+            margin-right: 10px;
+            text-align: center;
+        }
+
+        .btn-link:hover {
+            background-color: #1976D2;
+        }
+
+        .btn-link:active {
+            background-color: #1565C0;
+        }
+
+        .btn-link.materials {
+            background-color: #4CAF50;
+        }
+
+        .btn-link.materials:hover {
+            background-color: #45a049;
+        }
+
+        .btn-link.materials:active {
+            background-color: #3e8e41;
+        }
+
+        .no-records {
+            text-align: center;
+            color: #666;
+        }
+
+        .material-details {
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .material-details h3 {
+            margin-top: 0;
+            color: #2196F3;
+        }
+
+        .material-details ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .material-details ul li {
+            padding: 5px 0;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <h1>Gestion des Commandes</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom du Client</th>
+                <th>Matériels Loués</th>
+                <th>Prix Total</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for commande in commandes %}
+            <tr>
+                <td>{{ commande.id }}</td>
+                <td>{{ commande.nomClient }}</td>
+                <td>
+                    <div class="material-details">
+                        <h3>Matériels Loués</h3>
+                        <ul>
+                            {% for item in commande.commandeMaterials %}
+                                <li>{{ item.material.nom }} - Quantité: {{ item.quantite }} @ {{ item.material.prix }} €</li>
+                            {% else %}
+                                <li>Aucun matériel</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </td>
+                <td>{{ commande.prixTotal }} €</td>
+                <td>
+                    <a href="{{ path('app_commande_show', {'id': commande.id}) }}" class="btn-link">Afficher</a>
+                    <a href="{{ path('app_commande_edit', {'id': commande.id}) }}" class="btn-link">Éditer</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5" class="no-records">Aucun enregistrement trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_commande_new') }}" class="btn-link">Créer une nouvelle commande</a>
+    <a href="{{ path('app_material_index') }}" class="btn-link materials">Accéder aux Matériels</a>
+{% endblock %}

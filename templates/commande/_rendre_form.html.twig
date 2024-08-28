@@ -1,0 +1,4 @@
+<form method="post" action="{{ path('app_commande_rendre', {'id': commande.id}) }}" onsubmit="return confirm('Êtes-vous sur de vouloir rendre cette commande ?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('rendre' ~ commande.id) }}">
+    <button class="btn">Rendre la Commande</button>
+</form>

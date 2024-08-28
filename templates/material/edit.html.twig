@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Éditer le Matériel{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f5;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #4CAF50;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-wrapper {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .btn-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+            margin-right: 10px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .btn-link:hover {
+            background-color: #45a049;
+        }
+
+        .btn-link:active {
+            background-color: #3e8e41;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <h1>Éditer le Matériel</h1>
+
+    <div class="form-wrapper">
+        {{ include('material/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+        <a href="{{ path('app_material_index') }}" class="btn-link">Retour à la liste</a>
+    </div>
+
+    
+
+{% endblock %}

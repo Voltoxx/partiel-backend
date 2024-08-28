@@ -1,0 +1,163 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier Commande{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 700px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #2196F3;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-actions {
+            text-align: center;
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px; 
+        }
+
+        .btn {
+            padding: 12px 25px;
+            background-color: #2196F3;
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn:hover {
+            background-color: #1976D2;
+            transform: scale(1.02);
+        }
+
+        .btn:active {
+            background-color: #1565C0;
+            transform: scale(0.98);
+        }
+
+        .back-link {
+            background-color: #2196F3;
+            color: #ffffff;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .back-link:hover {
+            background-color: #1976D2; 
+            transform: scale(1.02);
+        }
+
+        .back-link:active {
+            background-color: #1565C0; 
+            transform: scale(0.98);
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .form-group input, 
+        .form-group select, 
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-group input:focus, 
+        .form-group select:focus, 
+        .form-group textarea:focus {
+            border-color: #2196F3;
+            box-shadow: 0 0 6px rgba(33, 150, 243, 0.2);
+            outline: none;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Modifier la Commande</h1>
+
+        <div class="form-container">
+            {{ form_start(form, {'attr': {'class': 'form-wrapper'}}) }}
+            
+            <div class="form-group">
+                {{ form_label(form.nomClient) }}
+                {{ form_widget(form.nomClient) }}
+                {{ form_errors(form.nomClient) }}
+            </div>
+
+            <div class="form-group">
+                <h3>Matériels Loués</h3>
+                <ul>
+                    {% for material in materials %}
+                        <li>
+                            {{ material.nom }}:
+                            {{ form_widget(form['material_' ~ material.id]) }}
+                            (Disponible: {{ material.quantite }})
+                        </li>
+                    {% else %}
+                        <li>Aucun matériel disponible</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="form-actions">
+                <a href="{{ path('app_commande_index') }}" class="back-link">Retour à la liste</a>
+                <button type="submit" class="btn">{{ button_label|default('Mettre à jour') }}</button>
+            </div>
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

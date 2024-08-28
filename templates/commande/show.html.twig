@@ -1,0 +1,173 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails de la Commande{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f7f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #2196F3;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table th, table td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        table th {
+            background-color: #2196F3;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            background-color: #2196F3;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            display: inline-block;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn:hover {
+            background-color: #1976D2;
+            transform: scale(1.02);
+        }
+
+        .btn:active {
+            background-color: #1565C0;
+            transform: scale(0.98);
+        }
+
+        .btn-back {
+        background-color: #2196F3; 
+        }
+
+        .btn-rendre {
+            background-color: #f44336; 
+        }
+
+        .btn-rendre:hover {
+            background-color: #e53935; 
+        }
+
+        .btn-rendre:active {
+            background-color: #c62828; 
+        }
+
+        .details-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #2196F3;
+            margin-bottom: 10px;
+        }
+
+        .details-value {
+            font-size: 1rem;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+
+        form button.btn-rendre {
+        border: none; 
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Détails de la Commande</h1>
+
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td class="details-value">{{ commande.id }}</td>
+                </tr>
+                <tr>
+                    <th>Nom du Client</th>
+                    <td class="details-value">{{ commande.nomClient }}</td>
+                </tr>
+                <tr>
+                    <th>Matériels Loués</th>
+                    <td class="details-value">
+                        {% if commande.commandeMaterials|length > 0 %}
+                            <ul>
+                                {% for item in commande.commandeMaterials %}
+                                    <li>{{ item.material.nom }} (Quantité: {{ item.quantite }})</li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            Aucun matériel loué
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Prix Total</th>
+                    <td class="details-value">{{ commande.prixTotal }} €</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="btn-container">
+            <a href="{{ path('app_commande_index') }}" class="btn btn-back">Retour à la liste</a>
+            <a href="{{ path('app_commande_edit', {'id': commande.id}) }}" class="btn">Modifier</a>
+            <form method="post" action="{{ path('app_commande_rendre', {'id': commande.id}) }}" onsubmit="return confirm('Êtes-vous sur de vouloir rendre cette commande ?');">
+                <input type="hidden" name="_token" value="{{ csrf_token('rendre' ~ commande.id) }}">
+                <button type="submit" class="btn btn-rendre">Rendre la Commande</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

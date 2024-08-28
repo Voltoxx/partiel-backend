@@ -1,0 +1,166 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion du Matériel{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f5;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #4CAF50;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .table th, .table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .table th {
+            background-color: #4CAF50;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .table td a {
+            text-decoration: none;
+            color: #4CAF50;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .table td a:hover {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .table td a:active {
+            background-color: #3e8e41;
+        }
+
+        .btn-new {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-new:hover {
+            background-color: #45a049;
+        }
+
+        .btn-new:active {
+            background-color: #3e8e41;
+        }
+
+        .no-records {
+            text-align: center;
+            color: #999;
+            font-size: 1.1rem;
+        }
+
+        .btn-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+            margin-right: 10px;
+            text-align: center;
+        }
+
+        .btn-link:hover {
+            background-color: #45a049;
+        }
+
+        .btn-link:active {
+            background-color: #3e8e41;
+        }
+
+        .btn-link.orders {
+            background-color: #2196F3;
+        }
+
+        .btn-link.orders:hover {
+            background-color: #1976D2;
+        }
+
+        .btn-link.orders:active {
+            background-color: #1565C0;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <h1>Gestion du Matériel</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Quantité</th>
+                <th>Prix</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for material in materials %}
+            <tr>
+                <td>{{ material.id }}</td>
+                <td>{{ material.nom }}</td>
+                <td>{{ material.quantite }}</td>
+                <td>{{ material.prix | number_format(2, ',', ' ') }} €</td>
+                <td>
+                    <a href="{{ path('app_material_show', {'id': material.id}) }}">Voir</a>
+                    <a href="{{ path('app_material_edit', {'id': material.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5" class="no-records">Aucun enregistrement trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_material_new') }}" class="btn-new">Créer un nouveau matériel</a>
+    <a href="{{ path('app_commande_index') }}" class="btn-link orders">Accéder aux Commandes</a>
+
+{% endblock %}

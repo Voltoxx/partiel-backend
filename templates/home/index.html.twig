@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil - Gestion du Matériel et des Commandes{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f5;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .home-wrapper {
+            text-align: center;
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #4CAF50;
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        .btn:active {
+            background-color: #3e8e41;
+        }
+
+        .btn.commande {
+            background-color: #2196F3;
+        }
+
+        .btn.commande:hover {
+            background-color: #1976D2;
+        }
+
+        .btn.commande:active {
+            background-color: #1565C0;
+        }
+
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="home-wrapper">
+        <h1>Bienvenue dans le système de gestion</h1>
+        <p>Gérez facilement vos commandes et votre matériel avec notre système convivial.</p>
+        <div class="btn-container">
+            <a href="{{ path('app_material_index') }}" class="btn">Gérer le Matériel</a>
+            <a href="{{ path('app_commande_index') }}" class="btn commande">Gérer les Commandes</a>
+        </div>
+    </div>
+{% endblock %}
