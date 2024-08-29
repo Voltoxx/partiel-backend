@@ -10,7 +10,7 @@ Cette application Symfony permet la gestion des commandes et des matériaux. Il 
 
 Avant de commencer, assurez-vous d'avoir installé [PHP](https://www.php.net/), [Composer](https://getcomposer.org/), et [Symfony CLI](https://symfony.com/download) sur votre machine.
 
-pour vérifier si vous avez installé Node.js et npm, exécutez les commandes suivantes dans votre terminal :
+pour vérifier si vous avez installé PHP, Composer et le CLI Symfony exécutez les commandes suivantes dans votre terminal :
 
 ```bash
 php -v
